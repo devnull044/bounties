@@ -9,8 +9,11 @@ def check_for_web(address, timeout):
 		ip = ipaddress.ip_address(address.strip('/32'))
 		url_s = 'https://%s/' % ip
 		url_ns = 'http://%s/' % ip
-		r_s = requests.get(url=url_s, proxies=proxies, verify=False, timeout=timeout)
-		r_ns = requests.get(url=url_ns, proxies=proxies, timeout=timeout)
+		try:
+			r_s = requests.get(url=url_s, proxies=proxies, verify=False, timeout=timeout)
+			r_ns = requests.get(url=url_ns, proxies=proxies, timeout=timeout)
+		except:
+			continue
 		if r_s.status_code == 200:
 			print("Website availible at:", url_s)
 		if r_ns.status_code == 200:
